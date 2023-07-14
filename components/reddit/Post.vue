@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { ExpandedChild } from "../../types";
 
+// Import icons
+import ArrowUpIcon from "~/assets/icons/arrow-up.svg";
+import CommentIcon from "~/assets/icons/message-square.svg";
+
 const props = defineProps<{
 	post: ExpandedChild;
 }>();
@@ -27,6 +31,16 @@ const props = defineProps<{
 					By <strong>{{ props.post.data.author }}</strong> in
 					<strong>r/{{ props.post.data.subreddit }}</strong>
 				</p>
+				<div class="info-bits">
+					<div class="info-with-icon comments">
+						<CommentIcon />
+						{{ props.post.data.num_comments }}
+					</div>
+					<div class="info-with-icon score">
+						<ArrowUpIcon />
+						{{ props.post.data.score }}
+					</div>
+				</div>
 			</div>
 		</Container>
 	</div>
@@ -65,10 +79,35 @@ const props = defineProps<{
 		}
 	}
 
+	.bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 14px;
+		margin-top: 15px;
+
+		.info-bits {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			.info-with-icon {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+			}
+
+			svg {
+				width: 1rem;
+				height: 1rem;
+				display: block;
+				margin-bottom: 0;
+			}
+		}
+	}
+
 	.author-info {
 		margin: 0;
-		margin-top: 15px;
-		font-size: 14px;
 		font-weight: 600;
 
 		strong {
