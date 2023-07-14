@@ -1,11 +1,13 @@
 <template>
 	<div class="main">
-		<Container> Hoi </Container>
+		<ClientOnly>
+			<Subreddit />
+		</ClientOnly>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 .main {
-	margin: 40px 0;
+	margin-bottom: 40vh;
 }
 </style>
