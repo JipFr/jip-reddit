@@ -1,13 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 :root {
 	--body: white;
-	--text-secondary: #474747; 
-	--border: #F1F1F1;
+	--text-secondary: #474747;
+	--border: #f1f1f1;
+
+	--header-height: 50px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--body: #121212;
+		--text-secondary: #a1a1a1;
+		--border: #1f1f1f;
+	}
 }
 
 body {
 	margin: 0;
 	background: var(--body);
 	color: var(--text-secondary);
-	font-family: 'Poppins', sans-serif;
+	font-family: "Poppins", sans-serif;
+	padding-top: var(--header-height);
 }
