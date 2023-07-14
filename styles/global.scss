@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+:root {
+	--body: white;
+	--text-secondary: #474747; 
+	--border: #F1F1F1;
+}
+
+body {
+	margin: 0;
+	background: var(--body);
+	color: var(--text-secondary);
+	font-family: 'Poppins', sans-serif;
+}
