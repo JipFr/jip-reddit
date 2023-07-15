@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ExpandedChild } from "~/types";
-import { decodeHTML } from "~/util/expandPostData";
 
 // Import icons
 import ArrowUpIcon from "~/assets/icons/arrow-up.svg";
@@ -33,14 +32,9 @@ const props = defineProps<{
 				class="description"
 				v-html="props.post.data.selftext_html"
 			/>
-			<div v-if="(props.post.data.images || []).length > 0" class="imgs">
-				<img
-					v-for="image of props.post.data.images || []"
-					:key="image.url"
-					:src="image.url"
-					class="image"
-				/>
-			</div>
+
+			<MediaViewer :post="post" />
+
 			<div class="bottom">
 				<p class="author-info">
 					By <strong>{{ props.post.data.author }}</strong> in
@@ -107,27 +101,6 @@ const props = defineProps<{
 		::v-deep(*) {
 			font-size: inherit;
 			margin: 0;
-		}
-	}
-
-	.imgs {
-		margin: 20px 0;
-		width: calc(100% + var(--container-padding) * 2);
-		margin-left: calc(var(--container-padding) * -1);
-
-		max-width: calc(100% + var(--container-padding) * 2);
-		overflow-x: auto;
-		display: flex;
-		align-items: center;
-		flex-wrap: nowrap;
-		scroll-snap-type: x mandatory;
-		max-height: calc(100vh - env(safe-area-inset-top));
-		overflow-y: hidden;
-
-		.image {
-			width: 100%;
-			min-width: 100%;
-			scroll-snap-align: start;
 		}
 	}
 
