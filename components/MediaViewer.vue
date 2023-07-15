@@ -27,25 +27,26 @@ const { post } = defineProps<{
 	margin: 20px 0;
 	width: calc(100% + var(--container-padding) * 2);
 	margin-left: calc(var(--container-padding) * -1);
-
 	max-width: calc(100% + var(--container-padding) * 2);
 	overflow-x: auto;
 	display: flex;
 	align-items: center;
 	flex-wrap: nowrap;
 	scroll-snap-type: x mandatory;
-	max-height: calc(100vh - env(safe-area-inset-top));
+	max-height: var(--max-height);
 	overflow-y: hidden;
 
 	&.no-margin {
 		margin-top: 0;
-		margin-bottom: 20px; // lol
+		margin-bottom: 0;
 	}
 
 	.image {
+		scroll-snap-align: start;
 		width: 100%;
 		min-width: 100%;
-		scroll-snap-align: start;
+		max-height: var(--image-max-height);
+		object-fit: contain;
 	}
 }
 </style>

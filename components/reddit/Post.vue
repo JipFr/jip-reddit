@@ -75,6 +75,10 @@ const props = defineProps<{
 
 	&.full {
 		padding-top: 0;
+
+		.title {
+			margin-top: 20px;
+		}
 	}
 
 	&:not(.full) .description {

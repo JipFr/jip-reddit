@@ -4,5 +4,14 @@ const route = useRoute();
 </script>
 
 <template>
-	<Subreddit full :subreddit="`by_id/${route.params.post}`" />
+	<div class="post-page">
+		<Subreddit full :subreddit="`by_id/${route.params.post}`" />
+		<RedditComments :post-id="route.params.post" />
+	</div>
 </template>
+
+<style lang="scss">
+.post-page {
+	--image-max-height: 800px;
+}
+</style>

@@ -9,6 +9,7 @@
 
 	--header-height: 50px;
 	--container-padding: 20px;
+	--image-max-height: calc(80vh - env(safe-area-inset-top));
 }
 
 @media (prefers-color-scheme: dark) {
