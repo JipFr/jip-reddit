@@ -3,7 +3,6 @@ import { Child, ExpandedChild, ExpandedChildData, Image } from "~/types";
 export function decodeHTML(html: string) {
 	var txt = document.createElement("textarea");
 	txt.innerHTML = html;
-	console.log(txt.value);
 	return txt.value;
 }
 
