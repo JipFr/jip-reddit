@@ -115,7 +115,7 @@ const props = defineProps<{
 		width: calc(100% + var(--container-padding) * 2);
 		margin-left: calc(var(--container-padding) * -1);
 
-		max-width: 100%;
+		max-width: calc(100% + var(--container-padding) * 2);
 		overflow-x: auto;
 		display: flex;
 		align-items: center;
@@ -125,7 +125,6 @@ const props = defineProps<{
 		overflow-y: hidden;
 
 		.image {
-			width: 100%;
 			width: 100%;
 			min-width: 100%;
 			scroll-snap-align: start;
