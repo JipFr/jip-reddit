@@ -2,8 +2,9 @@
 import { Child, ExpandedChild } from "~/types";
 import { expandPostData } from "../util/expandPostData";
 
-const { subreddit } = defineProps<{
+const { subreddit, full } = defineProps<{
 	subreddit: string;
+	full?: boolean;
 }>();
 
 const posts = ref<ExpandedChild[]>([]);
@@ -16,7 +17,7 @@ async function loadMore() {
 	loading.value = true;
 
 	const { data } = await fetch(
-		`https://www.reddit.com/r/${subreddit}.json${
+		`https://www.reddit.com/${subreddit}.json${
 			after.value ? `?after=${after.value}` : ""
 		}`
 	).then((d) => d.json());
@@ -37,6 +38,7 @@ async function loadMore() {
 loadMore();
 
 onMounted(() => {
+	if (full) return;
 	window.addEventListener("scroll", () => {
 		if (
 			window.innerHeight + window.scrollY >=
@@ -50,6 +52,11 @@ onMounted(() => {
 
 <template>
 	<div class="posts">
-		<RedditPost v-for="post of posts" :key="post.data.id" :post="post" />
+		<RedditPost
+			:full="full"
+			v-for="post of posts"
+			:key="post.data.name"
+			:post="post"
+		/>
 	</div>
 </template>

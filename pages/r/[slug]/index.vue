@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { useRoute } from "vue-router";
-
 const route = useRoute();
 </script>
 
 <template>
-	<Subreddit :subreddit="route.params.slug" />
+	<Subreddit :subreddit="`r/${route.params.slug}`" />
 </template>

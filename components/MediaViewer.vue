@@ -3,11 +3,16 @@ import { ExpandedChild } from "~/types";
 
 const { post } = defineProps<{
 	post: ExpandedChild;
+	noMargin?: boolean;
 }>();
 </script>
 
 <template>
-	<div v-if="(post.data.images || []).length > 0" class="imgs">
+	<div
+		v-if="(post.data.images || []).length > 0"
+		class="imgs"
+		:class="noMargin && 'no-margin'"
+	>
 		<img
 			v-for="image of post.data.images || []"
 			:key="image.url"
@@ -31,6 +36,11 @@ const { post } = defineProps<{
 	scroll-snap-type: x mandatory;
 	max-height: calc(100vh - env(safe-area-inset-top));
 	overflow-y: hidden;
+
+	&.no-margin {
+		margin-top: 0;
+		margin-bottom: 20px; // lol
+	}
 
 	.image {
 		width: 100%;

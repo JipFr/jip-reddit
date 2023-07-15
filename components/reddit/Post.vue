@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ExpandedChild } from "~/types";
+import { RouterLink } from "vue-router";
 
 // Import icons
 import ArrowUpIcon from "~/assets/icons/arrow-up.svg";
@@ -8,12 +9,19 @@ import ZapIcon from "~/assets/icons/zap.svg";
 
 const props = defineProps<{
 	post: ExpandedChild;
+	full?: boolean;
 }>();
 </script>
 
 <template>
-	<div class="post">
+	<component
+		:is="full ? 'div' : RouterLink"
+		:to="`/r/${props.post.data.subreddit}/${props.post.data.name}`"
+		class="post"
+		:class="full && 'full'"
+	>
 		<Container>
+			<MediaViewer no-margin v-if="full" :post="post" />
 			<h3 class="title">
 				<div v-if="props.post.data.madeByGender">
 					<div class="gender-indicator" :gender="props.post.data.madeByGender">
@@ -33,7 +41,7 @@ const props = defineProps<{
 				v-html="props.post.data.selftext_html"
 			/>
 
-			<MediaViewer :post="post" />
+			<MediaViewer v-if="!full" :post="post" />
 
 			<div class="bottom">
 				<p class="author-info">
@@ -54,13 +62,41 @@ const props = defineProps<{
 				</div>
 			</div>
 		</Container>
-	</div>
+	</component>
 </template>
 
 <style lang="scss" scoped>
 .post {
 	border-bottom: 1px solid var(--border);
 	padding: 20px 0;
+	color: inherit;
+	text-decoration: none;
+	display: block;
+
+	&.full {
+		padding-top: 0;
+	}
+
+	&:not(.full) .description {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		margin: 0;
+
+		::v-deep(*) {
+			margin: 0;
+		}
+	}
+
+	.description {
+		margin-top: 10px;
+		font-size: 14px;
+
+		::v-deep(*) {
+			font-size: inherit;
+		}
+	}
 
 	::v-deep(a) {
 		color: inherit;
@@ -86,21 +122,6 @@ const props = defineProps<{
 				width: 1.5rem;
 				height: 1.5rem;
 			}
-		}
-	}
-
-	.description {
-		margin: 0;
-		margin-top: 10px;
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-		font-size: 14px;
-
-		::v-deep(*) {
-			font-size: inherit;
-			margin: 0;
 		}
 	}
 
