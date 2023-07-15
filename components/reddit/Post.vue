@@ -14,8 +14,7 @@ const props = defineProps<{
 </script>
 
 <template>
-	<component
-		:is="full ? 'div' : RouterLink"
+	<NuxtLink
 		:to="`/r/${props.post.data.subreddit}/${props.post.data.name}`"
 		class="post"
 		:class="full && 'full'"
@@ -62,7 +61,7 @@ const props = defineProps<{
 				</div>
 			</div>
 		</Container>
-	</component>
+	</NuxtLink>
 </template>
 
 <style lang="scss" scoped>
