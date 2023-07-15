@@ -126,6 +126,21 @@ export interface ChildData {
 	num_crossposts?: number;
 	media?: null;
 	is_video?: boolean;
+	preview?: {
+		enabled: boolean;
+		images: Image[];
+	};
+}
+
+interface Image {
+	source: Source;
+	resolutions: Source[];
+}
+
+interface Source {
+	url: string;
+	width: number;
+	height: number;
 }
 
 export interface ExpandedChildData extends ChildData {

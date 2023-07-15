@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { ExpandedChild } from "../../types";
 
+import { decodeHTML } from "~/util/expandPostData";
+
 // Import icons
 import ArrowUpIcon from "~/assets/icons/arrow-up.svg";
 import CommentIcon from "~/assets/icons/message-square.svg";
@@ -26,6 +28,14 @@ const props = defineProps<{
 				class="description"
 				v-html="props.post.data.selftext_html"
 			/>
+			<div class="imgs">
+				<img
+					v-for="image of props.post.data.preview?.images || []"
+					:key="image.source.url"
+					:src="decodeHTML(image.source.url || '')"
+					class="image"
+				/>
+			</div>
 			<div class="bottom">
 				<p class="author-info">
 					By <strong>{{ props.post.data.author }}</strong> in
@@ -76,6 +86,19 @@ const props = defineProps<{
 		::v-deep(*) {
 			font-size: inherit;
 			margin: 0;
+		}
+	}
+
+	.imgs {
+		margin: 20px 0;
+		width: calc(100% + var(--container-padding) * 2);
+		margin-left: calc(var(--container-padding) * -1);
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		grid-gap: 10px;
+
+		.image {
+			width: 100%;
 		}
 	}
 
