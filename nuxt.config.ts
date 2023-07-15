@@ -26,7 +26,12 @@ export default defineNuxtConfig({
 					content: "yes",
 				},
 			],
-			link: [],
+			link: [
+				{
+					rel: "manifest",
+					href: "/manifest.json",
+				},
+			],
 			style: [],
 			script: [],
 			noscript: [],
