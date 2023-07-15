@@ -1,7 +1,7 @@
 <template>
 	<div class="main">
 		<ClientOnly>
-			<Subreddit />
+			<Subreddit subreddit="all" />
 		</ClientOnly>
 	</div>
 </template>

@@ -1,8 +1,12 @@
-<script setup>
+<script lang="ts" setup>
+import { Child, ExpandedChild } from "~/types";
 import { expandPostData } from "../util/expandPostData";
 
-const subreddit = ref("dune");
-const posts = ref([]);
+const { subreddit } = defineProps<{
+	subreddit: string;
+}>();
+
+const posts = ref<ExpandedChild[]>([]);
 const after = ref(null);
 const loading = ref(false);
 
@@ -12,15 +16,15 @@ async function loadMore() {
 	loading.value = true;
 
 	const { data } = await fetch(
-		`https://www.reddit.com/r/${subreddit.value}.json${
+		`https://www.reddit.com/r/${subreddit}.json${
 			after.value ? `?after=${after.value}` : ""
 		}`
 	).then((d) => d.json());
 
 	after.value = data.after;
 
-	const newPosts = await Promise.all(
-		data.children.map(async (post) => {
+	const newPosts: ExpandedChild[] = await Promise.all(
+		data.children.map(async (post: Child) => {
 			const expanded = await expandPostData(post);
 			return expanded;
 		})

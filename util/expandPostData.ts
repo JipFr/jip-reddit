@@ -1,4 +1,4 @@
-import { Child, ExpandedChildData } from "../types";
+import { Child, ExpandedChild, ExpandedChildData } from "../types";
 
 export function decodeHTML(html: string) {
 	var txt = document.createElement("textarea");
@@ -6,7 +6,7 @@ export function decodeHTML(html: string) {
 	return txt.value;
 }
 
-export async function expandPostData(post: Child): Promise<Child> {
+export async function expandPostData(post: Child): Promise<ExpandedChild> {
 	const postData = post.data;
 
 	// Find gender in title

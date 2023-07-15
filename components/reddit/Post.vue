@@ -28,7 +28,10 @@ const props = defineProps<{
 				class="description"
 				v-html="props.post.data.selftext_html"
 			/>
-			<div class="imgs">
+			<div
+				v-if="(props.post.data.preview?.images || []).length > 0"
+				class="imgs"
+			>
 				<img
 					v-for="image of props.post.data.preview?.images || []"
 					:key="image.source.url"
@@ -65,6 +68,10 @@ const props = defineProps<{
 		color: inherit;
 		touch-action: none;
 		text-decoration: none;
+	}
+
+	::v-deep(hr) {
+		display: none;
 	}
 
 	.title {
