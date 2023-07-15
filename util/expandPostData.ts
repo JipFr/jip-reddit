@@ -1,8 +1,9 @@
-import { Child, ExpandedChild, ExpandedChildData } from "../types";
+import { Child, ExpandedChild, ExpandedChildData, Image } from "~/types";
 
 export function decodeHTML(html: string) {
 	var txt = document.createElement("textarea");
 	txt.innerHTML = html;
+	console.log(txt.value);
 	return txt.value;
 }
 
@@ -23,6 +24,23 @@ export async function expandPostData(post: Child): Promise<ExpandedChild> {
 		postData.title.replace(genderRegex, "").trim()
 	);
 
+	// Get all images
+	let images: Image[] = (post.data.gallery_data?.items || [])
+		.map((t) => {
+			return {
+				url: decodeHTML(post.data.media_metadata?.[t.media_id].s.u),
+			};
+		})
+		.filter((t) => t.url);
+
+	if (images.length === 0) {
+		images = (post.data.preview?.images || []).map((t) => {
+			return {
+				url: decodeHTML(t.source.url),
+			};
+		});
+	}
+
 	const expandedChildData: ExpandedChildData = {
 		...postData,
 		cleanedTitle,
@@ -30,6 +48,7 @@ export async function expandPostData(post: Child): Promise<ExpandedChild> {
 		selftext_html: postData.selftext_html
 			? decodeHTML(postData.selftext_html)
 			: undefined,
+		images,
 	};
 
 	return {

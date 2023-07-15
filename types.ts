@@ -128,13 +128,39 @@ export interface ChildData {
 	is_video?: boolean;
 	preview?: {
 		enabled: boolean;
-		images: Image[];
+		images: RedditImage[];
+	};
+	media_metadata: {
+		[key: string]: {
+			status: string;
+			e: string;
+			m: string;
+			p: AnotherSource[];
+			s: AnotherSource;
+		};
+	};
+	gallery_data?: {
+		items: {
+			outbound_url?: string;
+			media_id: string;
+			id: string;
+		}[];
 	};
 }
 
-interface Image {
+interface AnotherSource {
+	x: number;
+	y: number;
+	u: string;
+}
+
+interface RedditImage {
 	source: Source;
 	resolutions: Source[];
+}
+
+export interface Image {
+	url: string;
 }
 
 interface Source {
@@ -146,6 +172,7 @@ interface Source {
 export interface ExpandedChildData extends ChildData {
 	cleanedTitle: string;
 	madeByGender: "M" | "F" | null;
+	images: Image[];
 }
 
 export interface ExpandedChild extends Child {

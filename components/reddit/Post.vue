@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { ExpandedChild } from "../../types";
-
+import { ExpandedChild } from "~/types";
 import { decodeHTML } from "~/util/expandPostData";
 
 // Import icons
 import ArrowUpIcon from "~/assets/icons/arrow-up.svg";
 import CommentIcon from "~/assets/icons/message-square.svg";
+import ZapIcon from "~/assets/icons/zap.svg";
 
 const props = defineProps<{
 	post: ExpandedChild;
@@ -21,28 +21,32 @@ const props = defineProps<{
 						{{ props.post.data.madeByGender === "F" ? "💁‍♀️" : "🙋‍♂️" }}
 					</div>
 				</div>
-				{{ props.post.data.cleanedTitle }}
+				<span>
+					<span class="zap-icon" v-if="props.post.data.stickied">
+						<ZapIcon />
+					</span>
+					{{ props.post.data.cleanedTitle }}
+				</span>
 			</h3>
 			<p
 				v-if="props.post.data.selftext_html"
 				class="description"
 				v-html="props.post.data.selftext_html"
 			/>
-			<div
-				v-if="(props.post.data.preview?.images || []).length > 0"
-				class="imgs"
-			>
+			<div v-if="(props.post.data.images || []).length > 0" class="imgs">
 				<img
-					v-for="image of props.post.data.preview?.images || []"
-					:key="image.source.url"
-					:src="decodeHTML(image.source.url || '')"
+					v-for="image of props.post.data.images || []"
+					:key="image.url"
+					:src="image.url"
 					class="image"
 				/>
 			</div>
 			<div class="bottom">
 				<p class="author-info">
 					By <strong>{{ props.post.data.author }}</strong> in
-					<strong>r/{{ props.post.data.subreddit }}</strong>
+					<nuxt-link :to="`/r/${props.post.data.subreddit}`">
+						<strong>r/{{ props.post.data.subreddit }}</strong>
+					</nuxt-link>
 				</p>
 				<div class="info-bits">
 					<div class="info-with-icon comments">
@@ -79,6 +83,16 @@ const props = defineProps<{
 		font-size: 1rem;
 		color: var(--text);
 		margin: 0;
+
+		.zap-icon {
+			color: var(--theme);
+
+			svg {
+				display: inline-block;
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+		}
 	}
 
 	.description {
@@ -100,12 +114,21 @@ const props = defineProps<{
 		margin: 20px 0;
 		width: calc(100% + var(--container-padding) * 2);
 		margin-left: calc(var(--container-padding) * -1);
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		grid-gap: 10px;
+
+		max-width: 100%;
+		overflow-x: auto;
+		display: flex;
+		align-items: center;
+		flex-wrap: nowrap;
+		scroll-snap-type: x mandatory;
+		max-height: calc(100vh - env(safe-area-inset-top));
+		overflow-y: hidden;
 
 		.image {
 			width: 100%;
+			width: 100%;
+			min-width: 100%;
+			scroll-snap-align: start;
 		}
 	}
 

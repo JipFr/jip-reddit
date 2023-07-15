@@ -1,8 +1,14 @@
+<script lang="ts" setup>
+function tmpThing() {
+	location.href = `/r/${prompt("Enter subreddit")}`;
+}
+</script>
+
 <template>
 	<header>
 		<Container>
-			<p class="logo">LOGO</p>
-			<p>...</p>
+			<nuxt-link to="/" class="logo">LOGO</nuxt-link>
+			<p @click="tmpThing">Temporary switcher</p>
 		</Container>
 	</header>
 </template>
@@ -21,9 +27,20 @@ header {
 	.logo {
 		font-weight: 600;
 	}
+
+	p {
+		margin: 0;
+	}
 }
 .container {
+	height: 100%;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
 }
 </style>
