@@ -12,6 +12,6 @@ const route = useRoute();
 
 <style lang="scss">
 .post-page {
-	--image-max-height: 800px;
+	--image-max-height: 40vh;
 }
 </style>
