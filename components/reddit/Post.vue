@@ -79,6 +79,10 @@ const props = defineProps<{
 		.title {
 			margin-top: 20px;
 		}
+
+		::v-deep(a) {
+			color: var(--theme);
+		}
 	}
 
 	&:not(.full) .description {
